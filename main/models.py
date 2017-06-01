@@ -9,5 +9,3 @@ class User(Document):
 
     def __unicode__(self):
         return self.name
-
-    meta = {'ordering': ['-created']}

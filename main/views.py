@@ -27,4 +27,27 @@ def register(request):
 #API
 @api_view(['POST'])
 def create_user(request):
+    req_name  = None
+    req_email = None
+    req_pwd   = None
+    req_prefs = None
+
+    try:
+        req_name  = request.data['name']
+        req_email = request.data['email']
+        req_pwd   = request.data['pwd']
+    except:
+        return Response({"status" : "Failure", "data": request.data} , status = status.HTTP_400_BAD_REQUEST)
+
+    try:
+        req_prefs = request.data['prefs']
+    except:
+        req_prefs = ['Mall', 'Food', 'Drink']
+
+    user = User.objects.create(name     = req_name,
+                               email    = req_email,
+                               pwd      = req_pwd,
+                               prefs    = req_prefs)
+
+    user.save()
     return Response({"status" : "Success", "data": request.data} , status = status.HTTP_201_CREATED)
