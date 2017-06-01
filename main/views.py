@@ -5,7 +5,7 @@ def index(request):
     return HttpResponse('INDEX!')
 
 def login(request):
-    return HttpResponse('LOGIN!')
+    return HttpResponse(request)
 
 def register(request):
     return HttpResponse('REGISTER!')
