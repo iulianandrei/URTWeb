@@ -1,4 +1,5 @@
 from mongoengine import *
+import json
 
 
 class User(Document):
@@ -9,3 +10,7 @@ class User(Document):
 
     def __unicode__(self):
         return self.name
+
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+                          sort_keys=True, indent=4)

@@ -10,4 +10,5 @@ urlpatterns = [
 
     #API
     url(r'^api/users/create$', views.create_user),
+    url(r'^api/users/check$', views.check_user),
 ]

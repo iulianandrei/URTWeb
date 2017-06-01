@@ -10,6 +10,9 @@ from rest_framework import status
 from main.models import User
 from main.serializers import UserSerializer
 
+import bcrypt
+import json
+
 
 #Pages
 def index(request):
@@ -17,10 +20,11 @@ def index(request):
 
 
 def login(request):
-    return render(request, 'LoginView.html')
+    return render(request, 'login/LoginView.html')
+
 
 def register(request):
-    return render(request, 'RegisterView.html')
+    return render(request, 'register/RegisterView.html')
 
 
 #API
@@ -37,18 +41,37 @@ def create_user(request):
         req_email = request.data['email']
         req_pwd   = request.data['pwd']
     except:
-        return Response({"status" : "Failure", "data": request.data} , status = status.HTTP_400_BAD_REQUEST)
+        return Response({"status" : "Failure", "data": request.data}, status = status.HTTP_400_BAD_REQUEST)
 
     try:
         req_prefs = request.data['prefs']
     except:
         req_prefs = ['Mall', 'Food', 'Drink']
 
+    hashed = bcrypt.hashpw(bytes(req_pwd, encoding='ascii'), bcrypt.gensalt())
+
     user = User.objects.create(name     = req_name,
                                email    = req_email,
-                               pwd      = req_pwd,
+                               pwd      = hashed,
                                prefs    = req_prefs)
 
     user.save()
-    return Response({"status" : "Success", "data": request.data} , status = status.HTTP_201_CREATED)
+    return Response({"status" : "Success", "token": hashed}, status = status.HTTP_201_CREATED)
 
+@api_view(['POST'])
+def check_user(request):
+    req_email = None
+    req_pwd   = None
+
+    try:
+        req_email = request.data['email']
+        req_pwd   = request.data['pwd']
+    except:
+        return Response({"status" : "Failure", "data": request.data}, status = status.HTTP_400_BAD_REQUEST)
+
+    for user in User.objects:
+        if user.email == req_email:
+            if bcrypt.checkpw(bytes(req_pwd, encoding='ascii'), bytes(user.pwd, encoding='ascii')):
+                return Response({"status": "Accepted"}, status=status.HTTP_200_OK)
+
+    return Response({"status": "Rejected"}, status=status.HTTP_200_OK)
