@@ -1,0 +1,53 @@
+body{
+    background-image: none;
+}
+#map{
+    right: 0;
+    position: absolute;
+    width: 85%;
+    height: 100vh;
+    border-left: 2px solid #4a4a4a;
+}
+.gooster-map-menu{
+    width: 15%;
+    position: absolute;
+    left: 0;
+    height: 100vh;
+    top: 0;
+    background-color: cadetblue;
+}
+.gooster-map-menu > div:first-child > img{
+    width: auto;
+    height: auto;
+    max-width: 90%;
+    margin-top: 20px;
+}
+.site-mascote{
+    position: absolute;
+    bottom: 10px;
+    animation:cats 2s infinite;
+    animation-fill-mode: both;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+}
+@keyframes cats {
+    from{left: 30px;}
+    to{left: 170px;}
+}
+
+.item-tabs{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.item-tab{
+    width: 50%;
+    text-align: center;
+    height: 50px;
+    padding: 10px;
+    line-height: 50px;
+    background: rgba(255,255,255,.1);
+}
+.item-tab:hover{
+    border-bottom: 1px solid #cdcdcd;
+}

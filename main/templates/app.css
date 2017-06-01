@@ -1,0 +1,43 @@
+body{
+    width: 100%;
+    background-image: url("/assets/images/background.jpeg");
+    height: 100vh;
+    overflow: hidden;
+    color: #fff;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+}
+a:hover{
+    border-bottom: 1px solid #fff;
+}
+a:visited{
+    color: #fff;
+    text-decoration: none !important;
+}
+.header-menu{
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    padding-right: 30px;
+    padding-left: 30px;
+    background: rgba(0,0,0,.5);
+    height: 70px;
+    display: flex;
+    align-items: center;
+}
+.header-menu > ul{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+.header-menu > ul > li{
+    margin-right: 25px;
+}
+.header-menu > ul > li:first-child{
+    margin-left: auto;
+}
+.pointer{
+    cursor: pointer;
+}
