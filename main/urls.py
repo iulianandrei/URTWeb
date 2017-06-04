@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^login/$', views.login),
     url(r'^register/$', views.register),
+    url(r'^map/$', views.map),
 
     #API
     url(r'^api/users/create$', views.create_user),

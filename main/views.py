@@ -16,15 +16,19 @@ import json
 
 #Pages
 def index(request):
-    return render(request, 'MainView.html')
+    return render(request, 'MainView.html/')
 
 
 def login(request):
-    return render(request, 'login/LoginView.html')
+    return render(request, 'index.html/')
 
 
 def register(request):
-    return render(request, 'register/RegisterView.html')
+    return render(request, 'RegisterView.html/')
+
+def map(request):
+    return render(request, 'GoosterView.html/')
+
 
 
 #API

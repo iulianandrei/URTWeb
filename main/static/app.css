@@ -1,6 +1,6 @@
 body{
     width: 100%;
-    background-image: url("/assets/images/background.jpeg");
+    background-image: url("assets/images/background-login.jpeg");
     height: 100vh;
     overflow: hidden;
     color: #fff;
