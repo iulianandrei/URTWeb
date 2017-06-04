@@ -1,5 +1,5 @@
 <!doctype html>
-  <html lang="en" ng-app="app">
+  <html lang="en">
   <head>
     <meta charset="utf-8">
     <base href="/">
@@ -12,16 +12,16 @@
     <link rel="stylesheet" href="../static/assets/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="icon" href="../static/assets/images/guster.png">
   </head>
-  <body>
+  <body  ng-app="app">
     	<div class="header-menu">
 	    <p>Gooșter Hărț' | Search into the wild...</p>
 	    <ul>
-		<li class="pointer"><a href="MainView.html">About</a></li>
-		<li class="pointer"><a href="RegisterView.html">Register</a></li>
-		<li class="pointer"><a href="index.html">Login</a></li>
+		<li class="pointer"><a href="{% url 'index' %}">About</a></li>
+		<li class="pointer"><a href="{% url 'register' %}">Register</a></li>
+		<li class="pointer"><a href="{% url 'login' %}">Login</a></li>
 	    </ul>
 	</div>
-	<div class="login-form">
+	<div class="login-form" ng-controller="LoginController">
 	    <img src="../static/assets/images/logo.png">
 	    <div class="login-subtitle">
 		<i class="fa fa-user-o" aria-hidden="true" style="font-size: 20px;"></i>
@@ -29,20 +29,19 @@
 	    </div>
 	    <div>
 		<div class="login-inputs">
-		    <input type="email" placeholder="Enter your email address">
-		    <input type="password" placeholder="Enter your password">
+		    <input type="email" placeholder="Enter your email address" ng-model="user.email">
+		    <input type="password" placeholder="Enter your password" ng-model="user.pwd">
 		</div>
 		<div class="login-form-footer">
 		    <a class="pointer" href="http://i3.kym-cdn.com/photos/images/original/001/125/072/6d1.jpg">Need help?</a>
-		    <div class="pointer"><a href="GoosterView.html">Login</a></div>
+		    <div ng-click="login()" class="pointer">Login</div>
 		</div>
 	    </div>
-	    <a class="pointer" href="RegisterView.html">Create Account</a>
+	    <a class="pointer" href="{% url 'register' %}">Create Account</a>
 	</div>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
-		<script src="../static/app.js"></script>
-		<script src="../static/main/MainController.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+        <script src="../static/login/LoginController.js"></script>
   </body>
 </html>

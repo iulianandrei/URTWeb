@@ -1,9 +1,9 @@
 <div class="header-menu">
     <p>Gooșter Hărț' | Search into the wild...</p>
     <ul>
-        <li class="pointer"><a href="MainView.html">About</a></li>
-        <li class="pointer"><a href="RegisterView.html">Register</a></li>
-        <li class="pointer"><a href="index.html">Login</a></li>
+        <li class="pointer"><a href="{% url 'main' %}">About</a></li>
+        <li class="pointer"><a href="{% url 'register' %}">Register</a></li>
+        <li class="pointer"><a href="">Login</a></li>
     </ul>
 </div>
 <div class="login-form">
@@ -22,5 +22,5 @@
             <div class="pointer"><a href="GoosterView.html">Login</a></div>
         </div>
     </div>
-    <a class="pointer" href="RegisterView.html">Create Account</a>
+    <a class="pointer" href="{% url 'register' %}">Create Account</a>
 </div>

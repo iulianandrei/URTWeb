@@ -13,26 +13,25 @@
     <div class="header-menu">
         <p>Gooșter Hărț' | Search into the wild...</p>
         <ul>
-            <li class="pointer"><a href="MainView.html">About</a></li>
-            <li class="pointer"><a href="RegisterView.html">Register</a></li>
-            <li class="pointer"><a href="index.html">Login</a></li>
+            <li class="pointer"><a href="{% url 'index' %}">About</a></li>
+            <li class="pointer"><a href="{% url 'register' %}">Register</a></li>
+            <li class="pointer"><a href="{% url 'login' %}">Login</a></li>
         </ul>
     </div>
 
-    <form action="index.html" method="post" ng-controller="SignupController">
+    <form ng-controller="SignupController">
 
         <h1>Sign Up</h1>
 
         <fieldset>
             <legend>Your basic info</legend>
             <label for="name">Name:</label>
-            <input type="text" id="name" name="user_name">
-
+            <input type="text" id="name" name="user_name" ng-model="user.name">
             <label for="mail">Email:</label>
-            <input type="email" id="mail" name="user_email">
+            <input type="email" id="mail" name="user_email" ng-model="user.email">
 
             <label for="password">Password:</label>
-            <input type="password" id="password" name="user_password">
+            <input type="password" id="password" name="user_password" ng-model="user.pwd">
         </fieldset>
         <fieldset class="signup-preferences">
             <label>Interests:</label>
@@ -43,9 +42,11 @@
                 </div>
             </div>
         </fieldset>
-        <button type="submit">Sign Up</button>
+
+        <button ng-click="Sign_Up()">Sign Up</button>
     </form>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 <script src="../static/register/RegisterController.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 </html>
