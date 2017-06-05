@@ -1,6 +1,7 @@
+import bcrypt as bcrypt
 from django.shortcuts import render
 from django.http import HttpResponse
-
+from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -25,6 +26,7 @@ def login(request):
 
 def register(request):
     return render(request, 'RegisterView.html/')
+
 
 def map(request):
     return render(request, 'GoosterView.html/')

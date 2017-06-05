@@ -13,9 +13,9 @@
         <div class="header-menu">
             <p>Gooșter Hărț' | Search into the wild...</p>
             <ul>
-                <li class="pointer"><a href="MainView.html">About</a></li>
-                <li class="pointer"><a href="RegisterView.html">Register</a></li>
-                <li class="pointer"><a href="index.html">Login</a></li>
+                <li class="pointer"><a href="{% url 'index' %}">About</a></li>
+                <li class="pointer"><a href="{% url 'register' %}">Register</a></li>
+                <li class="pointer"><a href="{% url 'login' %}">Login</a></li>
             </ul>
         </div>
         <div class="title-main">
@@ -27,7 +27,32 @@
         Aceasta este proiectul nostru la TW. Aplicatia consta dintr-o interfata ce contine o harta similara Googla Maps, ce afiseaza locatii de interes
         in functie de anumite preferinte. De asemenea, afiseaza locatia personelor dintr-o lista de prieteni care sunt in apropiere.
         </br></br>
-        GÚȘTER, gușteri, s. m. 1. Specie de șopîrlă de culoare verde, care se hrănește cu insecte (Lacerta viridis). Puii ei... erau balauri, șerpi, nevăstuici, ciuhurezi, șopîrle, năpîrci și gușteri. ISPIRESCU, L. 348. Toate lighioanele... ba chiar șerpii, gușterii și șopîrlele, toate i se arătau lui în cale. ODOBESCU, S. III 185. ♦ Fig. Termen de ocară pentru oameni. Auzi, gușterul de ciocoi ! Cică e dreptul lui ! DUMITRIU, B. F. 67. Aha, gușter bătrîn, va să zică tu îl trimiteai să fure ? PAS, Z. I 200. 2. (Regional) Gîtlej; esofag. Pe urmă, după alt răstimp, a bolborosit din gușter. SADOVEANU, N. p. 89. ♦ Omușor. (Atestat în forma regională gîșter) Nu striga... are să-ți sară gîșterul. CAMILAR, N. II 299. 3. (Med. pop.) Crup. – Variantă: (regional) gî́șter s. m.</div>
+        GÚȘTER, gușteri, s. m. 1. Specie de șopîrlă de culoare verde,
+        care se hrănește cu insecte (Lacerta viridis). Puii ei... erau balauri, șerpi, nevăstuici, ciuhurezi, șopîrle, năpîrci
+        și gușteri. ISPIRESCU, L. 348. Toate lighioanele... ba chiar șerpii, gușterii și șopîrlele, toate i se arătau lui în cale.
+        ODOBESCU, S. III 185. ♦ Fig. Termen de ocară pentru oameni. Auzi, gușterul de ciocoi ! Cică e dreptul lui ! DUMITRIU, B. F. 67.
+        Aha, gușter bătrîn, va să zică tu îl trimiteai să fure ? PAS, Z. I 200. 2. (Regional) Gîtlej; esofag. Pe urmă, după alt răstimp,
+        a bolborosit din gușter. SADOVEANU, N. p. 89. ♦ Omușor. (Atestat în forma regională gîșter) Nu striga... are să-ți sară gîșterul.
+        CAMILAR, N. II 299. 3. (Med. pop.) Crup. – Variantă: (regional) gî́șter s. m.
+    </div>
+    <div style="display: flex; justify-content: space-around; align-items: center;">
+        <div>
+            <img src="../static/assets/images/cats.gif" style="width: 250px;">
+            <p style="width: 250px; text-align: center; font-size: 22px; color: #000;">Stefan Onu</p>
+        </div>
+        <div>
+            <img src="../static/assets/images/dans_dan.gif" style="width: 250px;">
+            <p style="width: 250px; text-align: center; font-size: 22px; color: #000;">Dan Gherman</p>
+        </div>
+        <div>
+            <img src="../static/assets/images/dans_tavi.gif" style="width: 250px;">
+            <p style="width: 250px; text-align: center; font-size: 22px; color: #000;">Octav Cebere</p>
+        </div>
+        <div>
+            <img src="../static/assets/images/Dans_iulian.gif" style="width: 250px;">
+            <p style="width: 250px; text-align: center; font-size: 22px; color: #000;">Iulian Andrei</p>
+        </div>
+    </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="../static/app.js"></script>

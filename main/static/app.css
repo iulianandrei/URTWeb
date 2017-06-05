@@ -2,11 +2,14 @@ body{
     width: 100%;
     background-image: url("assets/images/background-login.jpeg");
     height: 100vh;
-    overflow: hidden;
+    overflow-y: auto;
     color: #fff;
     background-size: cover;
     margin: 0;
     padding: 0;
+}
+p, div{
+    font-family: 'Mogra', cursive;
 }
 a:hover{
     border-bottom: 1px solid #fff;

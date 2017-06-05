@@ -19,8 +19,9 @@ body{
 .gooster-map-menu > div:first-child > img{
     width: auto;
     height: auto;
-    max-width: 90%;
+    max-width: 65%;
     margin-top: 20px;
+    margin-left: 40px;
 }
 .site-mascote{
     position: absolute;
@@ -48,6 +49,55 @@ body{
     line-height: 50px;
     background: rgba(255,255,255,.1);
 }
+.item-tab:first-child{
+    border-right: 1px solid #cdcdcd;
+}
 .item-tab:hover{
     border-bottom: 1px solid #cdcdcd;
+}
+
+.list-of-places-to-choose{
+    height: 45%;
+    border-bottom: 1px solid #cdcdcd;
+    overflow-y: auto;
+}
+
+.list-of-places-to-choose > div{
+    height: 45px;
+    text-align: center;
+    line-height: 45px;
+    border-bottom: 1px solid #222222;
+}
+
+.list-of-places-to-choose .checked-place{
+    background-color: darkgreen;
+    font-size: 20px;
+}
+
+.list-of-places-to-choose::-webkit-scrollbar {
+    width: 0;
+}
+
+.list-of-results{
+    height: 78%;
+    overflow-y: auto;
+}
+
+.list-of-results::-webkit-scrollbar {
+    width: 0;
+}
+
+.list-of-results > div{
+    border-bottom: 2px solid #cdcdcd;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.list-of-results > div > p{
+    text-align: center;
+    font-size: 18px;
+}
+
+.list-of-results > div:hover{
+    background-color: #4bc970;
 }

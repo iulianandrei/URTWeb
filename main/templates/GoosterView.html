@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../static/app.css">
     <link rel="stylesheet" href="../static/gooster/GoosterStyle.css">
     <link rel="stylesheet" href="../static/assets/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Mogra" rel="stylesheet">
     <link rel="icon" href="../static/assets/images/guster.png">
 </head>
 <body>
@@ -17,20 +18,35 @@
             <img src="../static/assets/images/guster.png">
         </div>
         <div class="item-tabs">
-            <div class="item-tab">Places</div>
-            <div class="item-tab">People</div>
+            <div class="item-tab" ng-click="showPlacesTypes = true;">Places</div>
+            <div class="item-tab" ng-click="showPlacesTypes = false;">Results</div>
         </div>
-        <div class="site-mascote">
-            <img src="../static/assets/images/cats.gif">
+        <div ng-if="showPlacesTypes" class="list-of-places-to-choose">
+            <div ng-repeat="place_type in list_of_places track by $index" ng-bind="place_type.location"
+                 ng-click="place_type.check = !place_type.check"
+                 ng-class="place_type.check ? 'checked-place' : ''"></div>
+        </div>
+        <p ng-if="showPlacesTypes">Click on 'Cats' to help you find your favorite places!</p>
+        <div ng-if="showPlacesTypes" class="site-mascote" ng-click="setPlaces()">
+            <img src="../static/assets/images/cats.gif" style="width: 100px;">
+        </div>
+
+        <div ng-if="!showPlacesTypes" class="list-of-results">
+            <div ng-repeat="place in places_in_proximity" ng-click="selectPlaceToGo(place)">
+                <img src="{{place.photos}}">
+                <p ng-bind="place.name"></p>
+                <p ng-bind="place.vicinity"></p>
+                <div ng-click="addToFavorites()">+ Add Place To Favorites</div>
+            </div>
         </div>
     </div>
     <div id="map"></div>
 </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script src="../static/app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjdSb7G5wboVeGG-e6YLbj_DyRsHswwB8&libraries=places&callback=initMap" async defer></script>
 <script src="../static/gooster/GoosterController.js"></script>
-<script src="../static/app.js"></script>
-<script src="../static/main/MainController.js"></script>
 </html>

@@ -74,7 +74,7 @@ button {
     margin-bottom: 10px;
 }
 
-fieldset {
+.fieldset {
     margin-bottom: 30px;
     border: none;
 }
@@ -84,12 +84,12 @@ legend {
     margin-bottom: 10px;
 }
 
-label {
+span {
     display: block;
     margin-bottom: 8px;
 }
 
-label.light {
+span.light {
     font-weight: 300;
     display: inline;
 }

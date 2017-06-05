@@ -1,87 +1,40 @@
 (function(){
     'use strict';
-    var app = angular.module('app', []);
+    var app = angular.module('app');
 
-    app.controller('SignupController', ['$scope', signupController]);
-    function signupController($scope) {
+    app.controller('SignupController', ['$scope', '$http', '$window', signupController]);
+    function signupController($scope, $http, $window) {
 
-        $scope.preferences = [
-            {
-                location: 'Mall',
-                check: false
-            },
-            {
-                location: 'Academic',
-                check: false
-            },
-            {
-                location: 'Food',
-                check: false
-            },
-            {
-                location: 'Supermarket',
-                check: false
-            },
-            {
-                location: 'Drink',
-                check: false
-            },
-            {
-                location: 'Caffeteria',
-                check: false
-            },
-            {
-                location: 'Internet Cafe',
-                check: false
-            },
-            {
-                location: 'Hospital',
-                check: false
-            },
-            {
-                location: 'Police',
-                check: false
-            },
-            {
-                location: 'Auto Service',
-                check: false
-            },
-            {
-                location: 'Hotels',
-                check: false
-            },
-            {
-                location: 'Parking Lot',
-                check: false
-            },
-            {
-                location: 'Banks',
-                check: false
-            },
-            {
-                location: 'ATM',
-                check: false
-            },
-            {
-                location: 'Pharmacy',
-                check: false
-            },
-            {
-                location: 'Post Office',
-                check: false
-            },
-            {
-                location: 'Club',
-                check: false
-            },
-            {
-                location: 'Parks',
-                check: false
-            },
-            {
-                location: 'Churches',
-                check: false
+        $scope.user = {
+            name:'',
+            email: '',
+            pwd: ''
+        };
+        $scope.$emit("FAVORITE_PLACES", $scope.preferences);
+        function verifyUserData(){
+            if(_.isEmpty($scope.user.name) ||_.isEmpty($scope.user.pwd) || _.isEmpty($scope.user.email)){
+                return false;
+            } else return true;
+        }
+
+        $scope.Sign_Up=function () {
+            if(!verifyUserData()) {
+                return;
             }
-        ];
+            $http({
+                method: 'POST',
+                url: 'http://localhost:8000/api/users/create',
+                data: $scope.user,
+                headers:{"Access-Control-Allow-Origin":" *"}
+            }).then(
+                function(res){
+                    console.log(res);
+                    $scope.$emit("FAVORITE_PLACES", $scope.preferences);
+                    $window.location.href = "http://localhost:8000/login/"
+                }, function(err){
+                    console.log(err)
+                }
+            );
+        };
     }
 })();
