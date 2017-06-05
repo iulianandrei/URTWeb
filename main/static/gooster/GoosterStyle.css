@@ -1,6 +1,9 @@
 body{
     background-image: none;
 }
+.gooster-map{
+    overflow: hidden;
+}
 #map{
     right: 0;
     position: absolute;
