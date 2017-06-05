@@ -33,15 +33,7 @@
             <label for="password">Password:</label>
             <input type="password" id="password" name="user_password" ng-model="user.pwd">
         </div>
-        <div class="fieldset signup-preferences">
-            <label>Interests:</label>
-            <div class="list-of-preferences">
-                <div ng-repeat="preference in preferences track by $index" ng-click="preference.check = !preference.check">
-                    <input style="height: 25px;" type="checkbox" ng-model="preference.check">
-                    <span class="light" ng-bind="preference.location"></span>
-                </div>
-            </div>
-        </div>
+        
 
         <button ng-click="Sign_Up()">Sign Up</button>
     </form>
