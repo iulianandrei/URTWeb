@@ -18,16 +18,16 @@
             <img src="../static/assets/images/guster.png">
         </div>
         <div class="item-tabs">
-            <div class="item-tab" ng-click="showPlacesTypes = true;">Places</div>
-            <div class="item-tab" ng-click="showPlacesTypes = false;">Results</div>
+            <div class="item-tab cursor" ng-click="showPlacesTypes = true;">Places</div>
+            <div class="item-tab cursor" ng-click="showPlacesTypes = false;">Results</div>
         </div>
-        <div ng-if="showPlacesTypes" class="list-of-places-to-choose">
+        <div ng-if="showPlacesTypes" class="list-of-places-to-choose cursor">
             <div ng-repeat="place_type in list_of_places track by $index" ng-bind="place_type.location"
                  ng-click="place_type.check = !place_type.check"
                  ng-class="place_type.check ? 'checked-place' : ''"></div>
         </div>
         <p ng-if="showPlacesTypes">Click on 'Cats' to help you find your favorite places!</p>
-        <div ng-if="showPlacesTypes" class="site-mascote" ng-click="setPlaces()">
+        <div ng-if="showPlacesTypes" class="site-mascote cursor" ng-click="setPlaces()">
             <img src="../static/assets/images/cats.gif" style="width: 100px;">
         </div>
 
@@ -36,7 +36,7 @@
                 <img src="{{place.photos}}">
                 <p ng-bind="place.name"></p>
                 <p ng-bind="place.vicinity"></p>
-                <div ng-click="addToFavorites()">+ Add Place To Favorites</div>
+                <div ng-click="addToFavorites()" class="cursor">+ Add Place To Favorites</div>
             </div>
         </div>
     </div>

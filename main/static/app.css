@@ -2,7 +2,7 @@ body{
     width: 100%;
     background-image: url("assets/images/background-login.jpeg");
     height: 100vh;
-    overflow-y: auto;
+    overflow-y: hidden;
     color: #fff;
     background-size: cover;
     margin: 0;
@@ -17,6 +17,10 @@ a:hover{
 a:visited{
     color: #fff;
     text-decoration: none !important;
+}
+.cursor{
+    cursor: hand;
+
 }
 .header-menu{
     margin: 0;
