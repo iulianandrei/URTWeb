@@ -12,4 +12,8 @@ urlpatterns = [
     # API
     url(r'^api/users/create$', views.create_user),
     url(r'^api/users/check$', views.check_user),
+    url(r'^api/users/addprefs$', views.add_prefs),
+    url(r'^api/users/getprefs$', views.get_prefs),
+    url(r'^api/users/delpref$', views.delete_pref),
+    url(r'^api/users/gettop$', views.get_top),
 ]
