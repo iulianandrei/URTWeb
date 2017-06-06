@@ -48,6 +48,10 @@ def create_user(request):
     except:
         return Response({"status" : "Failure", "data": request.data}, status = status.HTTP_400_BAD_REQUEST)
 
+    already = User.objects.get(email=req_email)
+    if already != None:
+        return Response({"status": "Failure - Already Exists", "data": request.data}, status=status.HTTP_409_CONFLICT)
+
 
     hashed = bcrypt.hashpw(bytes(req_pwd, encoding='ascii'), bcrypt.gensalt())
 
