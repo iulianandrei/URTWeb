@@ -1,4 +1,3 @@
-import bcrypt as bcrypt
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -11,6 +10,7 @@ from rest_framework import status
 from main.models import User
 from main.serializers import UserSerializer
 
+import operator
 import bcrypt
 import json
 
@@ -40,7 +40,6 @@ def create_user(request):
     req_name  = None
     req_email = None
     req_pwd   = None
-    req_prefs = None
 
     try:
         req_name  = request.data['name']
@@ -49,20 +48,21 @@ def create_user(request):
     except:
         return Response({"status" : "Failure", "data": request.data}, status = status.HTTP_400_BAD_REQUEST)
 
-    try:
-        req_prefs = request.data['prefs']
-    except:
-        req_prefs = ['Mall', 'Food', 'Drink']
+    already = User.objects.get(email=req_email)
+    if already != None:
+        return Response({"status": "Failure - Already Exists", "data": request.data}, status=status.HTTP_409_CONFLICT)
+
 
     hashed = bcrypt.hashpw(bytes(req_pwd, encoding='ascii'), bcrypt.gensalt())
 
     user = User.objects.create(name     = req_name,
                                email    = req_email,
                                pwd      = hashed,
-                               prefs    = req_prefs)
+                               prefs    = [])
 
     user.save()
     return Response({"status" : "Success", "token": hashed}, status = status.HTTP_201_CREATED)
+
 
 @api_view(['POST'])
 def check_user(request):
@@ -75,9 +75,70 @@ def check_user(request):
     except:
         return Response({"status" : "Failure", "data": request.data}, status = status.HTTP_400_BAD_REQUEST)
 
-    for user in User.objects:
-        if user.email == req_email:
-            if bcrypt.checkpw(bytes(req_pwd, encoding='ascii'), bytes(user.pwd, encoding='ascii')):
-                return Response({"status": "Accepted"}, status=status.HTTP_200_OK)
+    user = User.objects.get(email=req_email)
+
+    if(user != None):
+        if bcrypt.checkpw(bytes(req_pwd, encoding='ascii'), bytes(user.pwd, encoding='ascii')):
+            return Response({"status": "Accepted"}, status=status.HTTP_200_OK)
 
     return Response({"status": "Rejected"}, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+def add_prefs(request):
+    req_email = None
+    req_prefs  = None
+
+    try:
+        req_email = request.data['email']
+        req_prefs  = request.data['prefs']
+    except:
+        return Response({"status" : "Failure", "data": request.data}, status = status.HTTP_400_BAD_REQUEST)
+
+    User.objects(email=req_email).update(add_to_set__prefs=req_prefs)
+
+    return Response({"status": "OK"}, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def get_prefs(request):
+    req_email = None
+
+    try:
+        req_email = request.data['email']
+    except:
+        return Response({"status": "Failure", "data": request.data}, status=status.HTTP_400_BAD_REQUEST)
+
+    user = User.objects.get(email=req_email)
+
+    return Response({"status": "OK", "prefs": user.prefs}, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def delete_pref(request):
+    req_email = None
+    req_pref  = None
+
+    try:
+        req_email = request.data['email']
+        req_pref  = request.data['pref']
+    except:
+        return Response({"status": "Failure", "data": request.data}, status=status.HTTP_400_BAD_REQUEST)
+
+    User.objects(email=req_email).update(pull__prefs=req_pref)
+
+    return Response({"status": "OK"}, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def get_top(request):
+    varDict = {}
+    for user in User.objects:
+        for item in user.prefs:
+            if item in varDict:
+                varDict[item] = varDict[item] + 1
+            else:
+                varDict[item] = 1
+
+    newDict = dict(sorted(varDict.items(), key=operator.itemgetter(1), reverse=True)[:5])
+    return Response({"status": "OK", "data": newDict}, status=status.HTTP_200_OK)
+
