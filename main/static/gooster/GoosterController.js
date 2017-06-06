@@ -1,8 +1,8 @@
 (function(){
     'use strict';
     angular.module('app')
-        .controller('GoosterController', ['$scope', '$rootScope', '$window', goosterController]);
-    function goosterController($scope, $rootScope, $window){
+        .controller('GoosterController', ['$scope', '$http', '$window', goosterController]);
+    function goosterController($scope, $http, $window){
         $scope.markers_array = [];
         $scope.showPlacesTypes = true;
         var infoWindow;
@@ -74,6 +74,14 @@
                 lng: longitude
             };
             calcRoute();
+        };
+
+        $scope.addPlaceToFavorites = function(place_id){
+            $http({
+                'method': 'POST',
+                'url': 'http://localhost:8000',
+                'data': place_id
+            }).then(function(){}, function(){});
         };
 
         function handleLocationError(browserHasGeolocation, infoWindow, pos){
