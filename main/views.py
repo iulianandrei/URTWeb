@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.core.mail import send_mail
+from django.conf import settings
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view
@@ -48,8 +50,8 @@ def create_user(request):
     except:
         return Response({"status" : "Failure", "data": request.data}, status = status.HTTP_400_BAD_REQUEST)
 
-    already = User.objects.get(email=req_email)
-    if already != None:
+    already = User.objects(email=req_email).count()
+    if already > 0:
         return Response({"status": "Failure - Already Exists", "data": request.data}, status=status.HTTP_409_CONFLICT)
 
 
@@ -61,6 +63,13 @@ def create_user(request):
                                prefs    = [])
 
     user.save()
+
+    subject = "You are now a Gooster"
+    message = "Hi " + req_name + "!\n\n"
+    message += "Congratulations! You are now a Gooster! We hope you have a nice stay.\n\n"
+    message += "Have a nice day,\nGooster Team."
+    send_mail(subject, message, settings.EMAIL_HOST_USER, [req_email], fail_silently=True)
+
     return Response({"status" : "Success", "token": hashed}, status = status.HTTP_201_CREATED)
 
 
