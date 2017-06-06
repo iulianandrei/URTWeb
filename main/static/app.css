@@ -18,6 +18,10 @@ a:visited{
     color: #fff;
     text-decoration: none !important;
 }
+.cursor{
+    cursor: hand;
+
+}
 .header-menu{
     margin: 0;
     padding: 0;
