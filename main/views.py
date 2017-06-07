@@ -146,7 +146,7 @@ def get_top(request):
             if item in varDict:
                 varDict[item] = varDict[item] + 1
             else:
-                varDict[item] = 1
+                varDict[item] =     1
 
     newDict = dict(sorted(varDict.items(), key=operator.itemgetter(1), reverse=True)[:5])
     return Response({"status": "OK", "data": newDict}, status=status.HTTP_200_OK)

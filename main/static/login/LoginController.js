@@ -30,8 +30,8 @@
                 headers:{"Access-Control-Allow-Origin":" *"}
             }).then(function(res){
                 console.log(res);
-                if(res.status === 'Accepted'){
-                    localStorage.setItem('email', $scope.user.email);
+                if(res.data.status === 'Accepted'){
+                    localStorage.setItem('user_email', $scope.user.email);
                      $window.location.href = "http://localhost:8000/map/";
                 }},
                 function(err){console.log(err)

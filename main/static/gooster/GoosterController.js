@@ -3,8 +3,8 @@
     angular.module('app')
         .controller('GoosterController', ['$scope', '$http', '$window', goosterController]);
     function goosterController($scope, $http, $window){
-        if(localStorage.getItem('user_email') != null){
-            $window.location.href("http://localhost/login/");
+        if(localStorage.getItem('user_email') == null){
+            $window.location.href = "http://localhost:8000/login/";
         } else{
             $scope.user_prefs = [];
             getCurrentUserPrefs();
@@ -107,12 +107,18 @@
                 'method': 'GET',
                 'url': 'http://localhost:8000/api/users/gettop'
             }).then(function(res){
+                console.log(res);
                 var found = false;
-                _.each(res, function(place_id){
+                var place_ids_array = [];
+                _.forIn(res.data.data, function(value, key){
+                    place_ids_array.push(key);
+                });
+                console.log(place_ids_array);
+                _.each(place_ids_array, function(place_id){
                     var service = new google.maps.places.PlacesService($scope.map);
                     service.getDetails({'placeId': place_id}, function(place){
 
-                        if(Math.sqrt(Math.pow($scope.pos.lat - place.geometry.location.lat(), 2)
+                        if(place!= null && Math.sqrt(Math.pow($scope.pos.lat - place.geometry.location.lat(), 2)
                                 + Math.pow($scope.pos.lng - place.geometry.location.lng(), 2)) < 500){
                             found = true;
                             createMarker(place);
@@ -141,6 +147,7 @@
             $http({
                method: 'POST',
                 url: 'http://localhost:8000/api/users/getprefs',
+                data : JSON.stringify({'email': localStorage.getItem('user_email')}),
                 headers:{"Access-Control-Allow-Origin":" *"}
             }).then(
                 function(res){
