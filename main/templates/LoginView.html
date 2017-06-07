@@ -19,8 +19,11 @@
         </div>
         <div class="login-form-footer">
             <a class="cursor" href="http://i3.kym-cdn.com/photos/images/original/001/125/072/6d1.jpg">Need help?</a>
-            <div class="cursor"><a href="GoosterView.html">Login</a></div>
+            <div class="cursor">
+                <a href="GoosterView.html">Login</a>
+            </div>
         </div>
+        <p ng-hide="login_fail == false" style="color: red;">{$ login_fail $}</p>
     </div>
     <a class="cursor" href="{% url 'register' %}">Create Account</a>
 </div>

@@ -36,6 +36,7 @@
 		    <a class="cursor" href="http://i3.kym-cdn.com/photos/images/original/001/125/072/6d1.jpg">Need help?</a>
 		    <div ng-click="login()" class="cursor">Login</div>
 		</div>
+            <p ng-hide="login_fail == false" style="color: red; text-align: center; font-size:20px;" ng-bind="login_fail"></p>
 	    </div>
 	    <a class="pointer" href="{% url 'register' %}">Create Account</a>
 	</div>

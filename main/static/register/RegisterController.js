@@ -4,7 +4,7 @@
 
     app.controller('SignupController', ['$scope', '$http', '$window', signupController]);
     function signupController($scope, $http, $window) {
-
+        $scope.register_fail = false;
         $scope.user = {
             name:'',
             email: '',
@@ -31,10 +31,13 @@
             }).then(
                 function(res){
                     console.log(res);
+                    $scope.register_fail = false;
                     $scope.$emit("FAVORITE_PLACES", $scope.preferences);
                     $window.location.href = "http://localhost:8000/login/";
                 }, function(err){
-                    console.log(err)
+                    if(err.status == 409)
+                    $scope.register_fail = true;
+                    console.log(err);
                 }
             );
         };

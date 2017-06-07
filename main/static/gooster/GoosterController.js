@@ -99,6 +99,7 @@
             }).then(function(res){
                 console.log(res);
                 place.favorite = true;
+                $scope.user_prefs.push(place.place_id);
             }, function(err){
                 place.favorite = false;
                 console.log(err);
@@ -153,7 +154,15 @@
                 'data': JSON.stringify({'email': localStorage.getItem('user_email'), 'pref': place.place_id})
             }).then(function(res){
                 console.log(res);
-                place.favorite = true;
+                place.favorite = false;
+                var array = [];
+                _.each($scope.user_prefs, function(pref_place_id, index){
+                   if(pref_place_id === place.place_id){
+                       array = $scope.user_prefs.splice(index, 1);
+                       return false;
+                   }
+                });
+                $scope.user_prefs = array;
             }, function(err){console.log(err);});
         }
 

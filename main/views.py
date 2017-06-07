@@ -1,13 +1,21 @@
 from django.shortcuts import render
 from django.core.mail import send_mail
 from django.conf import settings
+from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import authentication, permissions
 from rest_framework import status
+
 from main.models import User
+from main.serializers import UserSerializer
 
 import operator
 import bcrypt
+import json
+
 
 #Pages
 def index(request):
@@ -76,6 +84,11 @@ def check_user(request):
     except:
         return Response({"status" : "Failure", "data": request.data}, status = status.HTTP_400_BAD_REQUEST)
 
+    exists = User.objects(email=req_email).count()
+    if exists < 1:
+        return Response({"status": "Failure - Not registered", "data": request.data}, status=status.HTTP_401_UNAUTHORIZED)
+
+
     user = User.objects.get(email=req_email)
 
     if(user != None):
@@ -138,8 +151,7 @@ def get_top(request):
             if item in varDict:
                 varDict[item] = varDict[item] + 1
             else:
-                varDict[item] =     1
+                varDict[item] = 1
 
     newDict = dict(sorted(varDict.items(), key=operator.itemgetter(1), reverse=True)[:5])
     return Response({"status": "OK", "data": newDict}, status=status.HTTP_200_OK)
-
