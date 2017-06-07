@@ -13,6 +13,7 @@
             pwd: ''
         };
 
+        // verificam daca sunt completate campurile
         function verifyUserData(){
             if(_.isEmpty($scope.user.pwd) || _.isEmpty($scope.user.email)){
                 return false;
@@ -23,6 +24,7 @@
             if(!verifyUserData()) {
                 return;
             }
+            // trimitere JSON cu datele de autentificare
             $http({
                 method: 'POST',
                 url: 'http://localhost:8000/api/users/check',
@@ -30,6 +32,7 @@
                 headers:{"Access-Control-Allow-Origin":" *"}
             }).then(function(res){
                 console.log(res);
+                // primire raspuns de la server daca userul exista sau nu
                 if(res.data.status === 'Accepted'){
                     localStorage.setItem('user_email', $scope.user.email);
                      $window.location.href = "http://localhost:8000/map/";

@@ -11,6 +11,7 @@
             pwd: ''
         };
         $scope.$emit("FAVORITE_PLACES", $scope.preferences);
+        //verificare daca sunt completate campurile de inregistrare
         function verifyUserData(){
             if(_.isEmpty($scope.user.name) ||_.isEmpty($scope.user.pwd) || _.isEmpty($scope.user.email)){
                 return false;
@@ -21,6 +22,7 @@
             if(!verifyUserData()) {
                 return;
             }
+            //trimiterea datelor de inregistrare la server
             $http({
                 method: 'POST',
                 url: 'http://localhost:8000/api/users/create',

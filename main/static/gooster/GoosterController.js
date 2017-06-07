@@ -13,7 +13,7 @@
         $scope.markers_array = [];
         $scope.showPlacesTypes = true;
         var infoWindow;
-
+        // initializare harta
         $window.initMap = function() {
             $scope.directionsDisplay = new google.maps.DirectionsRenderer();
 
@@ -32,13 +32,14 @@
                     };
                     $scope.map.setCenter($scope.pos);
 
+                    //marcarea cu pin a pozitiei curente
                     var marker = new google.maps.Marker({
                         map: $scope.map,
                         position: $scope.pos,
                         animation: google.maps.Animation.DROP
                     });
 
-                    // Add circle overlay and bind to marker
+                    // crearea razei in jurul pozitiei curente
                     var circle = new google.maps.Circle({
                         map: $scope.map,
                         radius: 500,
@@ -83,12 +84,14 @@
             calcRoute();
         };
 
+        // lista de locuri favorite
         $scope.addPlaceToFavorites = function(place, event){
             event.stopPropagation();
             if(place.hasOwnProperty('favorite') && place.favorite === true){
                 deletePlaceFromFavorites(place);
                 return;
             }
+            //Trimitere JSON cu preferinte
             $http({
                 'method': 'POST',
                 'url': 'http://localhost:8000/api/users/addprefs',
@@ -101,7 +104,13 @@
                 console.log(err);
             });
         };
+        //logout
+        $scope.logout = function(){
+            localStorage.clear();
+            $window.location.href = "http://localhost:8000/login/";
+        };
 
+        //top 5 cele mai populare locuri vizitate de catre utilizatorii aplicatiei
         $scope.getTop5PopularLocations = function(){
             $http({
                 'method': 'GET',
@@ -118,6 +127,7 @@
                     var service = new google.maps.places.PlacesService($scope.map);
                     service.getDetails({'placeId': place_id}, function(place){
 
+                        //verificarea daca cele mai vizitate locuri se afla in raza utilizatorului curent
                         if(place!= null && Math.sqrt(Math.pow($scope.pos.lat - place.geometry.location.lat(), 2)
                                 + Math.pow($scope.pos.lng - place.geometry.location.lng(), 2)) < 500){
                             found = true;
@@ -132,6 +142,7 @@
             });
         };
 
+        // stergerea unui loc favorit
         function deletePlaceFromFavorites(place){
             $http({
                 'method': 'POST',
@@ -143,6 +154,7 @@
             }, function(err){console.log(err);});
         }
 
+        // obtinerea listei de preferinte a unui utilizator
         function getCurrentUserPrefs(){
             $http({
                method: 'POST',
@@ -160,6 +172,7 @@
             );
         }
 
+        // rezolvarea erorilor de localizare
         function handleLocationError(browserHasGeolocation, infoWindow, pos){
             infoWindow.setPosition(pos);
             infoWindow.setContent(browserHasGeolocation ?
