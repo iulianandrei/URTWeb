@@ -116,6 +116,7 @@
                 'method': 'GET',
                 'url': 'http://localhost:8000/api/users/gettop'
             }).then(function(res){
+                $scope.gooster_sad=false;
                 console.log(res);
                 var found = false;
                 var place_ids_array = [];
@@ -137,7 +138,9 @@
                 });
                 return found;
             }, function(err){
+                $scope.gooster_sad=true;
                 console.log(err);
+
                 return false;
             });
         };
@@ -164,7 +167,7 @@
             }).then(
                 function(res){
                     console.log(res);
-                    $scope.user_prefs = res;
+                    $scope.user_prefs = res.data.prefs;
                 },
                 function(err){
                     console.log(err);
@@ -198,7 +201,7 @@
         function verifyIfHasFavorites(results_array){
             _.each(results_array, function(place){
                 var fav_place = _.find($scope.user_prefs, function(pref_id){
-                    return pref_id == place.id;
+                    return pref_id == place.place_id;
                 });
                 if(fav_place !== undefined){
                     place.favorite = true;
