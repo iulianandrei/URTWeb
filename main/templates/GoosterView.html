@@ -14,31 +14,42 @@
 <body>
 <div class="gooster-map" ng-controller="GoosterController">
     <div class="gooster-map-menu">
-        <div>
+        <div ng-click="getTop5PopularLocations() === true ? (gooster_sad = false) : (gooster_sad = true)">
             <img src="../static/assets/images/guster.png">
+            <i class="fa fa-tint" aria-hidden="true" ng-if="gooster_sad"
+               style="font-size: 30px; color: deepskyblue; position: absolute; top: 60px; left: 160px;"></i>
         </div>
         <div class="item-tabs">
             <div class="item-tab cursor" ng-click="showPlacesTypes = true;" ng-class="showPlacesTypes ? 'checked-item-tab' : ''">Places</div>
             <div class="item-tab cursor" ng-click="places_in_proximity.length > 0 ? (showPlacesTypes = false) : ''" ng-class="!showPlacesTypes ? 'checked-item-tab' : ''">Results</div>
         </div>
         <div ng-if="showPlacesTypes" class="list-of-places-to-choose cursor">
+            <div style="padding: 30px; font-size: 20px; background-color: gray; text-align: center; line-height: normal; height: auto;">
+                Get top 5 popular places in your proximity by clicking on our "Gooster" :)</div>
             <div ng-repeat="place_type in list_of_places track by $index" ng-bind="place_type.location"
                  ng-click="place_type.check = !place_type.check"
                  ng-class="place_type.check ? 'checked-place' : ''"></div>
         </div>
-        <p ng-if="showPlacesTypes">Click on 'Cats' to help you find your favorite places!</p>
+        <p ng-if="showPlacesTypes" style="text-align: center;">Click on 'Cats' to help you find your favorite places!</p>
         <div ng-if="showPlacesTypes" class="site-mascote cursor" ng-click="setPlaces()">
             <img src="../static/assets/images/cats.gif" style="width: 100px;">
         </div>
 
         <div ng-if="!showPlacesTypes" class="list-of-results">
+            <div style="padding: 30px; font-size: 20px; background-color: gray; text-align: center;">
+                Get top 5 popular places in your proximity by clicking on our "Gooster" :)</div>
             <div ng-repeat="place in places_in_proximity" ng-click="selectPlaceToGo(place)">
                 <div style="padding: 20px;">
                     <img src="{$ place.photos[0].getUrl({'maxWidth': 200, 'maxHeight': 250, 'minWidth': 200}) $}" style="width: 100%;">
                 </div>
                 <p ng-bind="place.name"></p>
                 <p ng-bind="place.vicinity"></p>
-                <div ng-click="addToFavorites()" class="cursor add-fav-button">+ Add Place To Favorites</div>
+                <div ng-click="addPlaceToFavorites(place, $event)" ng-class="place.favorite ? 'favorite-place' : ''"
+                     class="cursor add-fav-button">
+                    {$ !place.favorite ? '+ Add Place To Favorites' : 'Favorite' $}
+                    <i class="fa fa-heart" aria-hidden="true" ng-if="place.favorite"
+                       style="font-size: 28px; text-align: right; right: 40px; top: 3px; position: absolute; color: red;"></i>
+                </div>
             </div>
         </div>
     </div>

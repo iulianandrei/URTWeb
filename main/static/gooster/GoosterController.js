@@ -3,6 +3,13 @@
     angular.module('app')
         .controller('GoosterController', ['$scope', '$http', '$window', goosterController]);
     function goosterController($scope, $http, $window){
+        if(localStorage.getItem('user_email') != null){
+            $window.location.href("http://localhost/login/");
+        } else{
+            $scope.user_prefs = [];
+            getCurrentUserPrefs();
+        }
+        $scope.gooster_sad = false;
         $scope.markers_array = [];
         $scope.showPlacesTypes = true;
         var infoWindow;
@@ -76,13 +83,75 @@
             calcRoute();
         };
 
-        $scope.addPlaceToFavorites = function(place_id){
+        $scope.addPlaceToFavorites = function(place, event){
+            event.stopPropagation();
+            if(place.hasOwnProperty('favorite') && place.favorite === true){
+                deletePlaceFromFavorites(place);
+                return;
+            }
             $http({
                 'method': 'POST',
-                'url': 'http://localhost:8000',
-                'data': place_id
-            }).then(function(){}, function(){});
+                'url': 'http://localhost:8000/api/users/addprefs',
+                'data': JSON.stringify({'email': localStorage.getItem('user_email'), 'prefs': place.place_id})
+            }).then(function(res){
+                console.log(res);
+                place.favorite = true;
+            }, function(err){
+                place.favorite = false;
+                console.log(err);
+            });
         };
+
+        $scope.getTop5PopularLocations = function(){
+            $http({
+                'method': 'GET',
+                'url': 'http://localhost:8000/api/users/gettop'
+            }).then(function(res){
+                var found = false;
+                _.each(res, function(place_id){
+                    var service = new google.maps.places.PlacesService($scope.map);
+                    service.getDetails({'placeId': place_id}, function(place){
+
+                        if(Math.sqrt(Math.pow($scope.pos.lat - place.geometry.location.lat(), 2)
+                                + Math.pow($scope.pos.lng - place.geometry.location.lng(), 2)) < 500){
+                            found = true;
+                            createMarker(place);
+                        }
+                    });
+                });
+                return found;
+            }, function(err){
+                console.log(err);
+                return false;
+            });
+        };
+
+        function deletePlaceFromFavorites(place){
+            $http({
+                'method': 'POST',
+                'url': 'http://localhost:8000/api/users/delpref',
+                'data': JSON.stringify({'email': localStorage.getItem('user_email'), 'pref': place.place_id})
+            }).then(function(res){
+                console.log(res);
+                place.favorite = true;
+            }, function(err){console.log(err);});
+        }
+
+        function getCurrentUserPrefs(){
+            $http({
+               method: 'POST',
+                url: 'http://localhost:8000/api/users/getprefs',
+                headers:{"Access-Control-Allow-Origin":" *"}
+            }).then(
+                function(res){
+                    console.log(res);
+                    $scope.user_prefs = res;
+                },
+                function(err){
+                    console.log(err);
+                }
+            );
+        }
 
         function handleLocationError(browserHasGeolocation, infoWindow, pos){
             infoWindow.setPosition(pos);
@@ -95,8 +164,8 @@
         function callback(results, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
                 console.log(results);
+                verifyIfHasFavorites(results);
                 $scope.places_in_proximity = results;
-                console.log($scope.showPlacesTypes);
                 $scope.showPlacesTypes = false;
                 $scope.$apply();
                 console.log($scope.showPlacesTypes);
@@ -104,6 +173,17 @@
                     createMarker(results[i]);
                 }
             }
+        }
+
+        function verifyIfHasFavorites(results_array){
+            _.each(results_array, function(place){
+                var fav_place = _.find($scope.user_prefs, function(pref_id){
+                    return pref_id == place.id;
+                });
+                if(fav_place !== undefined){
+                    place.favorite = true;
+                }
+            });
         }
 
         function createMarker(place) {

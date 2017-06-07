@@ -24,13 +24,13 @@
             $http({
                 method: 'POST',
                 url: 'http://localhost:8000/api/users/create',
-                data: $scope.user,
+                data: JSON.stringify($scope.user),
                 headers:{"Access-Control-Allow-Origin":" *"}
             }).then(
                 function(res){
                     console.log(res);
                     $scope.$emit("FAVORITE_PLACES", $scope.preferences);
-                    $window.location.href = "http://localhost:8000/login/"
+                    $window.location.href = "http://localhost:8000/login/";
                 }, function(err){
                     console.log(err)
                 }

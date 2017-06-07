@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_mongoengine',
     'rest_framework.authtoken'
 ]
 
@@ -134,12 +135,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-
-EMAIL_HOST_USER = 'goostercontact@gmail.com'
-EMAIL_HOST_PASSWORD = 'goosterpassword'
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES': (

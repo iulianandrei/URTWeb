@@ -29,9 +29,10 @@
                 data: JSON.stringify($scope.user),
                 headers:{"Access-Control-Allow-Origin":" *"}
             }).then(function(res){
-                console.log(res)
+                console.log(res);
                 if(res.status === 'Accepted'){
-                     $window.location.href = "127.0.0.1:8000/map"
+                    localStorage.setItem('email', $scope.user.email);
+                     $window.location.href = "http://localhost:8000/map/";
                 }},
                 function(err){console.log(err)
 
